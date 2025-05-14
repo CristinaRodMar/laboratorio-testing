@@ -22,7 +22,7 @@ const mostrarUrlCarta = (urlCarta: string) => {
 };
 
 
-function mostrarGameOver(): void {
+export function mostrarGameOver(): void {
     if (mensajeGameOver instanceof HTMLElement && botonNuevoJuego instanceof HTMLButtonElement) {
         mensajeGameOver.textContent = "Game Over";
         mensajeGameOver.style.display = "block";
@@ -30,7 +30,7 @@ function mostrarGameOver(): void {
     }
 }
 
-function bloquearBotones(): void {
+export function bloquearBotones(): void {
     if (boton instanceof HTMLButtonElement && botonPlantarse instanceof HTMLButtonElement) {
         boton.disabled = true;
         botonPlantarse.disabled = true;
@@ -44,7 +44,7 @@ function activarBotones(): void {
     }
 }
 
-function mostrarMensaje(mensaje: string) {
+export function mostrarMensaje(mensaje: string) {
     const mensajePlantarse = document.getElementById("mensaje-plantarse");
     if (mensajePlantarse instanceof HTMLDivElement) {
         mensajePlantarse.textContent = mensaje;
@@ -91,7 +91,7 @@ export function iniciarNuevaPartida(): void {
     mostrarUrlCarta("https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg");
 }
 
-function revisarPartida() {
+export function revisarPartida() {
     if (partida.puntuacion > 7.5) {
         mostrarMensaje("Game Over");
         mostrarGameOver();
@@ -103,7 +103,7 @@ function revisarPartida() {
     }
 }
 
-function mostrarMensajePlantarse(): void {
+export function mostrarMensajePlantarse(): void {
     if (partida.puntuacion < 4) {
         mostrarMensaje("Has sido muy conservador");
     } else if (partida.puntuacion === 5) {

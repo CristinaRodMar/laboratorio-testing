@@ -7,7 +7,6 @@ export function obtenerPuntosCarta(carta: number) {
 export function sumaPuntuacion(puntos: number): number {
     return partida.puntuacion + puntos;
 }
-
 export const dameNumeroAleatorio = () => Math.floor(Math.random() * 10) + 1;
 
 export const dameNumeroCarta = (numero: number) => (numero > 7 ? numero + 2 : numero);
@@ -15,3 +14,4 @@ export const dameNumeroCarta = (numero: number) => (numero > 7 ? numero + 2 : nu
 export function actualizaPuntuacion(nuevosPuntos: number) {
     partida.puntuacion = nuevosPuntos;
 }
+
