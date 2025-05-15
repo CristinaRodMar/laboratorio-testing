@@ -1,5 +1,5 @@
 import { partida } from './modelo';
-import { dameNumeroAleatorio, dameNumeroCarta, obtenerPuntosCarta, sumaPuntuacion, actualizaPuntuacion } from './motor';
+import { dameNumeroAleatorio, dameNumeroCarta, obtenerPuntosCarta, sumaPuntuacion, actualizaPuntuacion, obtenerEstadoPartida } from './motor';
 
 export const mensajeGameOver = document.getElementById("game-over");
 export const botonNuevoJuego = document.getElementById("new-game");
@@ -92,11 +92,11 @@ export function iniciarNuevaPartida(): void {
 }
 
 export function revisarPartida() {
-    if (partida.puntuacion > 7.5) {
+    if (obtenerEstadoPartida() === 'TE_HAS_PASADO') {
         mostrarMensaje("Game Over");
         mostrarGameOver();
         bloquearBotones();
-    } else if (partida.puntuacion === 7.5) {
+    } else if (obtenerEstadoPartida() === 'JUSTO_MAXIMA') {
         mostrarMensaje("¡Lo has clavado! ¡Enhorabuena!");
         mostrarGameOver();
         bloquearBotones();

@@ -15,3 +15,12 @@ export function actualizaPuntuacion(nuevosPuntos: number) {
     partida.puntuacion = nuevosPuntos;
 }
 
+export const obtenerEstadoPartida = () => {
+    if (partida.puntuacion === 7.5) {
+        partida.estadoPartida = 'JUSTO_MAXIMA';
+    } else if (partida.puntuacion > 7.5) {
+        partida.estadoPartida = 'TE_HAS_PASADO';
+    }
+
+    return partida.estadoPartida;
+}

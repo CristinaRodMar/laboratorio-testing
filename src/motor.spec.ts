@@ -1,25 +1,6 @@
 import { vi } from "vitest"
-//import { beforeEach } from "vitest";
-//import * as ui from "./ui"
-
-//import { mostrarMensajePlantarse } from "./ui"
-import { dameNumeroAleatorio, sumaPuntuacion, obtenerPuntosCarta, dameNumeroCarta } from "./motor"
-import { partida } from "./modelo"
-
-describe("actualizaPuntuacion", () => {
-    // beforeEach(() => {
-    //     partida.puntuacion = 0;
-    // });
-
-    it("actualiza los puntos de la partida", () => {
-        // Arrange
-        vi.spyOn(partida, 'puntuacion', 'get').mockReturnValue(5)
-        // act
-        // actualizaPuntuacion(5);
-        // assert
-        expect(partida.puntuacion).toBe(5);
-    });
-});
+import { dameNumeroAleatorio, sumaPuntuacion, obtenerPuntosCarta, dameNumeroCarta, obtenerEstadoPartida } from "./motor"
+import { partida, EstadoPartida } from "./modelo"
 
 describe("obtenerPuntosCarta", () => {
     it("Debería devolver 0.5 porque es mayor que 7", () => {
@@ -202,110 +183,40 @@ describe('dameNumeroCarta', () => {
     });
 })
 
-// describe("sumaPuntuacion", () => {
-//     beforeEach(() => {
-//         partida.puntuacion = 0;
-//     });
+describe('obtenerEstadoPartida', () => {
+    it('Debería devolver el estado por debajo máximo, cuando la puntuación, es menor a 7.5', () => {
+        // Arrange
+        const resultadoEsperado: EstadoPartida = 'POR_DEBAJO_MAXIMO';
+        vi.spyOn(partida, 'puntuacion', 'get').mockReturnValue(4);
 
-//     it("suma los puntos de la partida", () => {
-//         //arrange
-//         const puntos = 5;
-//         // act
-//         const resultado = sumaPuntuacion(puntos);
-//         // assert
-//         expect(resultado).toBe(5);
-//         expect(partida.puntuacion).toBe(0);
-//     });
-// });
+        // Act
+        const resultado = obtenerEstadoPartida();
 
-// describe("obtenerPuntosCarta", () => {
-//     it("devuelve 0.5 si la carta es mayor que 7", () => {
-//         // Arrange
-//         const carta = 10;
-//         // Act
-//         const puntos = obtenerPuntosCarta(carta);
-//         // Assert
-//         expect(puntos).toBe(0.5);
-//     });
+        // Assert
+        expect(resultadoEsperado).toBe(resultado);
+    })
 
-//     it("devuelve el mismo número si la carta es menor o igual que 7", () => {
-//         // Arrange
-//         const carta = 5;
-//         // Act
-//         const puntos = obtenerPuntosCarta(carta);
-//         // Assert
-//         expect(puntos).toBe(5);
-//     });
-// });
+    it('Debería devolver el estado justo máxima, cuando la puntuación, es ígual a 7.5', () => {
+        // Arrange
+        const resultadoEsperado: EstadoPartida = 'JUSTO_MAXIMA';
+        vi.spyOn(partida, 'puntuacion', 'get').mockReturnValue(7.5);
 
-// describe("mostrarMensajePlantarse", () => {
+        // Act
+        const resultado = obtenerEstadoPartida();
 
-//     it("puntuacion partida < 4", () => {
-//         // arrange
-//         partida.puntuacion = 2;
-//         // act
-//         const mensaje = mostrarMensajePlantarse();
-//         // assert
-//         expect(mensaje).toBe("Has sido muy conservador");
-//     });
+        // Assert
+        expect(resultadoEsperado).toBe(resultado);
+    })
 
-//     it("puntuacion partida = 5", () => {
-//         // arrange
-//         partida.puntuacion = 5;
-//         // act
-//         const mensaje = mostrarMensajePlantarse();
-//         // assert
-//         expect(mensaje).toBe("Te ha entrado el canguelo eh?");
-//     });
+    it('Debería devolver el estado te has pasado, cuando la puntuación, es mayor a 7.5', () => {
+        // Arrange
+        const resultadoEsperado: EstadoPartida = 'TE_HAS_PASADO';
+        vi.spyOn(partida, 'puntuacion', 'get').mockReturnValue(11);
 
-//     it("puntuacion partida = 6", () => {
-//         // arrange
-//         partida.puntuacion = 6;
-//         // act
-//         const mensaje = mostrarMensajePlantarse();
-//         // assert
-//         expect(mensaje).toBe("Casi casi...");
-//     });
+        // Act
+        const resultado = obtenerEstadoPartida();
 
-//     it("puntuacion partida = 7.5", () => {
-//         // arrange
-//         partida.puntuacion = 7.5;
-//         // act
-//         const mensaje = mostrarMensajePlantarse();
-//         // assert
-//         expect(mensaje).toBe("¡Lo has clavado! ¡Enhorabuena!");
-//     });
-
-// });
-
-// describe("revisarPartida", () => {
-//     beforeEach(() => {
-//         partida.puntuacion = 7.5;
-//     });
-//     it("muestra mensaje de éxito si puntuación es 7.5"), () => {
-//         //arrange
-//         vi.spyOn(partida, "puntuacion", "get").mockReturnValue(7.5);
-//         const mensaje = spyOn(ui, "mostrarMensaje");
-//         const gameOver = spyOn(ui, "mostrarGameOver");
-//         const bloquear = spyOn(ui, "bloquearBotones");
-//         //act
-//         ui.revisarPartida();
-//         //assert
-//         expect(mensaje).toBe("¡Has ganado!");
-//         expect(gameOver).toBe("¡Has perdido!");
-//         expect(bloquear).toBe("Bloqueo de botón")
-//     }
-// })
-
-// describe("dameNumeroAleatorio", () => {
-//     it("forzamos a que devuelva 6", () => {
-//         // Arrange
-//         const numeroAleatorio = 7;
-//         const spyOnMath = vi.spyOn(global.Math, "random").mockReturnValue(0.6);
-//         // Act
-//         const resultado = dameNumeroAleatorio();
-//         // Assert
-//         expect(resultado).toBe(numeroAleatorio);
-//         spyOnMath.mockRestore();
-//     });
-// });
+        // Assert
+        expect(resultadoEsperado).toBe(resultado);
+    })
+})
